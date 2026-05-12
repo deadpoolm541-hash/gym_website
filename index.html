@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&amp;family=Space+Grotesk:wght@300..700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-container": "#556d00",
+                        "on-error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#c8c6c5",
+                        "on-error": "#690005",
+                        "inverse-on-surface": "#313030",
+                        "surface": "#131313",
+                        "on-primary-fixed": "#161e00",
+                        "tertiary-container": "#e5e2e1",
+                        "secondary-fixed-dim": "#ffb3af",
+                        "error": "#ffb4ab",
+                        "tertiary-fixed": "#e5e2e1",
+                        "outline": "#8e9379",
+                        "inverse-surface": "#e5e2e1",
+                        "on-secondary-fixed": "#410006",
+                        "on-background": "#e5e2e1",
+                        "surface-container": "#201f1f",
+                        "primary-fixed-dim": "#abd600",
+                        "tertiary": "#ffffff",
+                        "background": "#131313",
+                        "on-tertiary-fixed": "#1c1b1b",
+                        "primary-fixed": "#c3f400",
+                        "on-secondary-container": "#5c000b",
+                        "on-tertiary-container": "#656464",
+                        "surface-dim": "#131313",
+                        "secondary": "#ffb3af",
+                        "on-secondary": "#68000e",
+                        "outline-variant": "#444933",
+                        "error-container": "#93000a",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-tertiary": "#313030",
+                        "on-secondary-fixed-variant": "#930019",
+                        "surface-container-low": "#1c1b1b",
+                        "on-surface-variant": "#c4c9ac",
+                        "secondary-container": "#ff5357",
+                        "surface-container-high": "#2a2a2a",
+                        "primary-container": "#c3f400",
+                        "on-primary-fixed-variant": "#3c4d00",
+                        "surface-container-highest": "#353534",
+                        "surface-variant": "#353534",
+                        "on-primary": "#283500",
+                        "primary": "#ffffff",
+                        "surface-tint": "#abd600",
+                        "inverse-primary": "#506600",
+                        "surface-bright": "#3a3939",
+                        "on-tertiary-fixed-variant": "#474746",
+                        "secondary-fixed": "#ffdad8",
+                        "on-surface": "#e5e2e1"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0px",
+                        "lg": "0px",
+                        "xl": "0px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "container-max": "1440px",
+                        "margin": "40px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "lexend": ["Lexend", "sans-serif"],
+                        "spaceGrotesk": ["Space Grotesk", "sans-serif"],
+                        "headline-md": ["Lexend"],
+                        "body-lg": ["Space Grotesk"],
+                        "label-bold": ["Space Grotesk"],
+                        "body-md": ["Space Grotesk"],
+                        "display-xl": ["Lexend"],
+                        "headline-lg": ["Lexend"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["32px", {"lineHeight": "36px", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "label-bold": ["14px", {"lineHeight": "20px", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "display-xl": ["96px", {"lineHeight": "100px", "letterSpacing": "-0.04em", "fontWeight": "800"}],
+                        "headline-lg": ["48px", {"lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .neon-glow:hover {
+            box-shadow: 0 0 15px 0 rgba(204, 255, 0, 0.4);
+        }
+        .text-stroke {
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
+            color: transparent;
+        }
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0e0e0e;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #CCFF00;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md overflow-x-hidden">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 h-20 bg-black/90 backdrop-blur-xl border-b border-[#1A1A1A] flex justify-between items-center px-10">
+<div class="text-3xl font-black italic tracking-tighter text-[#CCFF00] font-lexend uppercase">GRAVITY</div>
+<nav class="hidden md:flex gap-8 items-center">
+<a class="text-[#CCFF00] border-b-2 border-[#CCFF00] pb-1 font-lexend tracking-tighter uppercase font-black text-sm" href="#">TRAINING</a>
+<a class="text-white/70 hover:text-white transition-colors font-lexend tracking-tighter uppercase font-black text-sm" href="#">PROGRAMS</a>
+<a class="text-white/70 hover:text-white transition-colors font-lexend tracking-tighter uppercase font-black text-sm" href="#">ELITE PASS</a>
+<a class="text-white/70 hover:text-white transition-colors font-lexend tracking-tighter uppercase font-black text-sm" href="#">LOCATION</a>
+</nav>
+<button class="bg-[#CCFF00] text-black font-lexend font-black px-6 py-2 tracking-tighter hover:bg-white transition-all scale-100 active:scale-90 uppercase">
+            JOIN NOW
+        </button>
+</header>
+<main>
+<!-- Cinematic Hero Section -->
+<section id="hero-section" class="relative h-[300vh] bg-black">
+    <div class="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <canvas id="hero-canvas" class="w-full h-full object-cover opacity-50 grayscale"></canvas>
+            <div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
+        </div>
+        
+        <!-- Text Layer 1 -->
+        <div id="hero-text-1" class="absolute inset-0 flex flex-col justify-center items-center z-10 text-center px-4 max-w-6xl mx-auto opacity-0 translate-y-10">
+            <h1 class="font-display-xl text-display-xl mb-4 text-white uppercase italic">
+                GRAVITY
+            </h1>
+            <p class="font-body-lg text-body-lg text-white/70 mb-10 max-w-2xl mx-auto uppercase tracking-widest">
+                THE ULTIMATE PERFORMANCE ECOSYSTEM. ENGINEERED FOR THOSE WHO COMMAND MORE FROM THE GRAVITY.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button class="bg-[#CCFF00] text-black font-lexend font-black text-lg px-12 py-4 tracking-tighter hover:bg-white transition-all scale-100 active:scale-95 uppercase">
+                    JOIN NOW
+                </button>
+                <button class="border-2 border-white text-white font-lexend font-black text-lg px-12 py-4 tracking-tighter hover:bg-white hover:text-black transition-all scale-100 active:scale-95 uppercase">
+                    VIEW PROGRAMS
+                </button>
+            </div>
+        </div>
+
+        <!-- Text Layer 2 -->
+        <div id="hero-text-2" class="absolute inset-0 flex flex-col justify-center items-center z-10 text-center px-4 max-w-6xl mx-auto">
+            <h1 class="font-display-xl text-display-xl text-[#CCFF00] uppercase italic">
+                NO WEAKNESS.
+            </h1>
+        </div>
+
+        <!-- Text Layer 3 -->
+        <div id="hero-text-3" class="absolute inset-0 flex flex-col justify-center items-center z-10 text-center px-4 max-w-6xl mx-auto opacity-0 translate-y-10">
+            <h1 class="font-display-xl text-display-xl text-white uppercase italic">
+                ONLY PROGRESS.
+            </h1>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce z-10">
+            <span class="material-symbols-outlined text-[#CCFF00] text-4xl">keyboard_double_arrow_down</span>
+        </div>
+    </div>
+</section>
+<!-- Training Ecosystem -->
+<section id="training-section" class="py-32 px-10 max-w-full">
+<div class="mb-16 flex justify-between items-end">
+<div>
+<span class="text-[#CCFF00] font-label-bold tracking-widest block mb-2">01 — ECOSYSTEM</span>
+<h2 class="font-headline-lg text-headline-lg text-white uppercase">TRAINING MODULES</h2>
+</div>
+<div class="hidden md:flex gap-4">
+<button class="w-12 h-12 border border-[#1A1A1A] flex items-center justify-center hover:bg-[#1A1A1A] transition-colors">
+<span class="material-symbols-outlined text-white">chevron_left</span>
+</button>
+<button class="w-12 h-12 border border-[#1A1A1A] flex items-center justify-center hover:bg-[#1A1A1A] transition-colors">
+<span class="material-symbols-outlined text-white">chevron_right</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Card 1 -->
+<div class="training-card group relative aspect-[4/5] bg-black border border-[#1A1A1A] overflow-hidden" style="opacity:0;transform:translateY(60px)">
+<img class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-110 transition-transform duration-700" data-alt="muscular athlete performing a heavy barbell back squat in a dark high-contrast gym environment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAsJxG6WkamBAjFw1rXaQVmlSX5GGnfn-3CNSSQn3eFQRmqaofd9_eRk5FUdN_ZCDh0HWsgZVmAPuHtcorS4pCEeHjFc0lEP17edqeo81MpTJLxk0IqyhXMHBMizl5m1NkFwTwZiviPY6xEvqoCsiezEPvqx6jWelANb67fGrfbJqhtOj3tqM_wTFJf1UiJ2szv1Ie_MWE6JQ_t67fdgSBwv3hegFuJohMyZlqGJQOkZ5pm9jWrMCdVLYWDXHoURUx9PIshQq9hMML"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+<div class="absolute bottom-0 p-8 w-full">
+<h3 class="font-headline-md text-headline-md text-white mb-2 uppercase italic">Strength Engine</h3>
+<p class="text-white/60 font-body-md mb-6">RAW POWER. PEAK LOAD. UNCOMPROMISING FORM.</p>
+<div class="h-1 w-0 bg-[#CCFF00] group-hover:w-full transition-all duration-500"></div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="training-card group relative aspect-[4/5] bg-black border border-[#1A1A1A] overflow-hidden" style="opacity:0;transform:translateY(60px)">
+<img class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-110 transition-transform duration-700" data-alt="athlete sprinting on a track at night with bright stadium lights creating long shadows" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBD7UQuynFfXKoOCPZwPSB4QshpdD8ASA7uP6JL7WWRH8XUEZd6wBGdUHgXg3o68KAJkS5S4UpI76WVsgvbA4ccBY71MoxfyG2mtBzxY3HfFmd7b85gIVc4rjr6H7qnfskroA46XwAngjtYyHGlrOkSUYyth34asHVf_yijbk3nHwTQ0xL6m2YnaFylmXew6Cni9QNrEauZj-N2YNktZr8sz5XCoW4joZXCrz0DMkiY8YJjc3LMVu_ynApO6RDElrZsIqwNil-DpcEn"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+<div class="absolute bottom-0 p-8 w-full">
+<h3 class="font-headline-md text-headline-md text-white mb-2 uppercase italic">Metabolic Burn</h3>
+<p class="text-white/60 font-body-md mb-6">HIGH-INTENSITY CONDITIONING. ENGINE OPTIMIZATION.</p>
+<div class="h-1 w-0 bg-[#CCFF00] group-hover:w-full transition-all duration-500"></div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="training-card group relative aspect-[4/5] bg-black border border-[#1A1A1A] overflow-hidden" style="opacity:0;transform:translateY(60px)">
+<img class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-110 transition-transform duration-700" data-alt="close up of a professional boxer with wrapped hands hitting a heavy bag in a dark gym" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBytdmgtpjggL8f-YfV08Z4QKQbMIaMCKOnWZ0y6DE8vgjoAZIM6Q2zZfNUp0CxTkMcW7j5jngKD_Fk83QS--kQgKl-ZFtWTjO2XjxIZxbwpo8RfTAehUBOlhcosY_2Pmz5L7bW-HdsK-e7FMvEqmyrW7VksN55rMGfbJ1nKOY0PLYC137fGiwHWIosBlvtrdLTk0dOj-5z1DiB5aNrRr9OMhJf1CCea6D_QenarTkg-Jkbp6iqQBUn_wS5dIly2QRM9-hvBeBQvG3x"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+<div class="absolute bottom-0 p-8 w-full">
+<h3 class="font-headline-md text-headline-md text-white mb-2 uppercase italic">Combat Sports</h3>
+<p class="text-white/60 font-body-md mb-6">TECHNICAL STRIKING. GRAPPLING. ELITE AGILITY.</p>
+<div class="h-1 w-0 bg-[#CCFF00] group-hover:w-full transition-all duration-500"></div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Canvas Animation Section -->
+<section id="recovery-animation-section" class="relative h-[200vh] bg-black">
+    <div class="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
+        <div class="relative z-10 w-full h-full flex items-center justify-center">
+            <canvas id="biomech-canvas" class="w-full h-full object-contain"></canvas>
+        </div>
+        <!-- Facility Stats Overlay -->
+        <div id="facility-stats" class="absolute bottom-4 right-4 z-30 text-right pointer-events-none bg-black px-6 py-4" style="opacity:0">
+            <span id="stat-label" class="block text-white/50 tracking-widest font-label-bold text-xs mb-2 uppercase">MACHINES AVAILABLE</span>
+            <div class="flex items-end justify-end gap-2">
+                <span id="stat-number" class="text-[#CCFF00] font-lexend font-black leading-none" style="font-size:clamp(3rem,7vw,6rem)">0</span>
+                <span id="stat-suffix" class="text-[#CCFF00] font-lexend font-black text-2xl leading-none mb-2">SQ FT</span>
+            </div>
+            <div id="stat-bar" class="h-px bg-[#CCFF00] mt-3" style="width:0"></div>
+        </div>
+    </div>
+</section>
+<!-- Membership Plans -->
+<section id="membership-section" class="py-32 px-10">
+<div class="text-center mb-20">
+<span class="text-[#CCFF00] font-label-bold tracking-widest block mb-2">03 — ACCESS</span>
+<h2 class="font-headline-lg text-headline-lg text-white uppercase">MEMBERSHIP TIERS</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-7xl mx-auto">
+<!-- Tier 1 -->
+<div class="tier-card bg-surface-container-low border border-[#1A1A1A] p-12 flex flex-col justify-between hover:border-white/30 hover:-translate-y-4 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)] transition-all duration-500 cursor-pointer" style="opacity:0;transform:translateY(60px)">
+<div>
+<h3 class="tier-item font-headline-md text-white uppercase mb-4" style="opacity:0;transform:translateY(15px)">Essential</h3>
+<div class="tier-item mb-10" style="opacity:0;transform:translateY(15px)">
+<span class="text-5xl font-lexend font-black text-white">$149</span>
+<span class="text-white/40 font-label-bold">/MO</span>
+</div>
+<ul class="tier-item space-y-4 mb-12 text-white/70" style="opacity:0;transform:translateY(15px)">
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-[#CCFF00] text-sm">check</span> Global Gym Access</li>
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-[#CCFF00] text-sm">check</span> Performance Locker</li>
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-[#CCFF00] text-sm">check</span> Base Recovery Access</li>
+</ul>
+</div>
+<button class="tier-item w-full border border-white text-white font-lexend font-black py-4 uppercase hover:bg-white hover:text-black transition-colors" style="opacity:0;transform:translateY(15px)">SELECT PLAN</button>
+</div>
+<!-- Tier 2 (Featured) -->
+<div class="tier-card bg-black border-2 border-[#CCFF00] p-12 flex flex-col justify-between relative shadow-[0_0_40px_-15px_rgba(204,255,0,0.3)] hover:-translate-y-4 hover:shadow-[0_0_60px_-10px_rgba(204,255,0,0.6)] transition-all duration-500 cursor-pointer" style="opacity:0;transform:translateY(60px)">
+<div class="absolute top-0 right-10 bg-[#CCFF00] text-black px-4 py-1 font-label-bold text-xs -translate-y-1/2">MOST POPULAR</div>
+<div>
+<h3 class="tier-item font-headline-md text-white uppercase mb-4" style="opacity:0;transform:translateY(15px)">Pro Elite</h3>
+<div class="tier-item mb-10" style="opacity:0;transform:translateY(15px)">
+<span class="text-5xl font-lexend font-black text-[#CCFF00]">$299</span>
+<span class="text-white/40 font-label-bold">/MO</span>
+</div>
+<ul class="tier-item space-y-4 mb-12 text-white/90" style="opacity:0;transform:translateY(15px)">
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-[#CCFF00] text-sm" data-weight="fill">check_circle</span> Unlimited Classes</li>
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-[#CCFF00] text-sm" data-weight="fill">check_circle</span> Priority Recovery Suite</li>
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-[#CCFF00] text-sm" data-weight="fill">check_circle</span> Quarterly Bio-Profiling</li>
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-[#CCFF00] text-sm" data-weight="fill">check_circle</span> GRAVITY Nutrition Pack</li>
+</ul>
+</div>
+<button class="tier-item w-full bg-[#CCFF00] text-black font-lexend font-black py-4 uppercase hover:bg-white transition-colors" style="opacity:0;transform:translateY(15px)">SELECT PLAN</button>
+</div>
+<!-- Tier 3 -->
+<div class="tier-card bg-surface-container-low border border-[#1A1A1A] p-12 flex flex-col justify-between hover:border-white/30 hover:-translate-y-4 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)] transition-all duration-500 cursor-pointer" style="opacity:0;transform:translateY(60px)">
+<div>
+<h3 class="tier-item font-headline-md text-white uppercase mb-4" style="opacity:0;transform:translateY(15px)">Titanium</h3>
+<div class="tier-item mb-10" style="opacity:0;transform:translateY(15px)">
+<span class="text-5xl font-lexend font-black text-white">$599</span>
+<span class="text-white/40 font-label-bold">/MO</span>
+</div>
+<ul class="tier-item space-y-4 mb-12 text-white/70" style="opacity:0;transform:translateY(15px)">
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-[#CCFF00] text-sm">check</span> All-Inclusive Access</li>
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-[#CCFF00] text-sm">check</span> Personal Bio-Coach</li>
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-[#CCFF00] text-sm">check</span> Unlimited Bio-Recovery</li>
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-[#CCFF00] text-sm">check</span> Private Training Area</li>
+</ul>
+</div>
+<button class="tier-item w-full border border-white text-white font-lexend font-black py-4 uppercase hover:bg-white hover:text-black transition-colors" style="opacity:0;transform:translateY(15px)">SELECT PLAN</button>
+</div>
+</div>
+</section>
+<!-- Biomechanics Section -->
+<section id="biomechanics-section" class="relative h-[200vh] bg-black">
+    <div class="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
+        <!-- Static Background text -->
+        <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-5">
+            <h2 class="text-[20vw] font-black italic uppercase leading-none font-lexend">GRAVITY</h2>
+        </div>
+
+        <!-- Center: Decline Animation Canvas -->
+        <div class="relative z-10 w-full h-full flex items-center justify-center">
+            <canvas id="decline-canvas" class="w-full h-full object-contain"></canvas>
+        </div>
+
+        <!-- Biomechanics HUD Overlay -->
+        <div class="absolute inset-0 pointer-events-none z-20 flex flex-col justify-between p-8 md:p-16">
+            <!-- Top Bar -->
+            <div class="flex justify-between items-start text-[#CCFF00] uppercase">
+                <div class="flex flex-col gap-1">
+                    <span class="text-sm tracking-widest opacity-70 font-label-bold text-white">EXERCISE PROFILE</span>
+                    <span class="font-lexend font-black text-xl md:text-2xl tracking-tighter">STANDING DECLINE CABLE FLY</span>
+                </div>
+                <div class="text-right flex flex-col gap-1">
+                    <span class="text-sm tracking-widest opacity-70 font-label-bold text-white">TARGET MUSCLE</span>
+                    <span class="font-lexend font-black text-xl md:text-2xl tracking-tighter">LOWER PECTORALIS MAJOR</span>
+                </div>
+            </div>
+
+            <!-- Phase Info Box & Metrics -->
+            <div class="w-full flex flex-col md:flex-row justify-between items-end gap-8">
+                <!-- Phase Info -->
+                <div class="max-w-md w-full bg-black/80 p-6 border-l-4 border-[#CCFF00]">
+                    <div class="flex flex-col gap-2">
+                        <span id="phase-number" class="text-[#CCFF00] font-lexend font-black text-3xl md:text-4xl">PHASE 01</span>
+                        <span id="phase-title" class="text-white font-lexend font-bold text-xl md:text-2xl uppercase">ECCENTRIC PRELOAD</span>
+                        <p id="phase-desc" class="text-white/70 font-body-md uppercase text-sm leading-relaxed">CORE BRACED. SLIGHT FORWARD LEAN. MAXIMAL CABLE TENSION AT HIGH PULLEY ORIGIN.</p>
+                    </div>
+                </div>
+
+                <!-- Live Metrics -->
+                <div class="text-right flex gap-8 translate-y-12 translate-x-12">
+                    <div class="flex flex-col text-right bg-black/80 p-4 border-t border-[#1A1A1A]">
+                        <span class="text-white/50 tracking-widest font-label-bold text-xs mb-1">TENSION</span>
+                        <span id="tension-metric" class="text-[#CCFF00] font-lexend font-black text-2xl md:text-3xl">85%</span>
+                    </div>
+                    <div class="flex flex-col text-right bg-black/80 p-4 border-t border-[#1A1A1A]">
+                        <span class="text-white/50 tracking-widest font-label-bold text-xs mb-1">TORQUE</span>
+                        <span id="torque-metric" class="text-[#CCFF00] font-lexend font-black text-2xl md:text-3xl">90 NM</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Community/Social Feed Ticker -->
+<section class="bg-black py-8 border-y border-[#1A1A1A] overflow-hidden whitespace-nowrap">
+<div class="flex items-center gap-12 animate-infinite-scroll">
+<div class="flex items-center gap-4">
+<span class="w-2 h-2 rounded-full bg-[#CCFF00]"></span>
+<span class="font-label-bold text-[#CCFF00]">LIVE COMMUNITY</span>
+</div>
+<span class="text-white/40 font-lexend tracking-tighter uppercase font-black">MARK R. JUST HIT 220KG SQUAT PR</span>
+<span class="text-[#CCFF00] font-lexend tracking-tighter uppercase font-black">/</span>
+<span class="text-white/40 font-lexend tracking-tighter uppercase font-black">6 NEW ATHLETES JOINED THE GRAVITY</span>
+<span class="text-[#CCFF00] font-lexend tracking-tighter uppercase font-black">/</span>
+<span class="text-white/40 font-lexend tracking-tighter uppercase font-black">SARA K. COMPLETED 12-WEEK SHRED</span>
+<span class="text-[#CCFF00] font-lexend tracking-tighter uppercase font-black">/</span>
+<span class="text-white/40 font-lexend tracking-tighter uppercase font-black">METABOLIC BURN CLASS STARTING IN 5M</span>
+<span class="text-[#CCFF00] font-lexend tracking-tighter uppercase font-black">/</span>
+<span class="text-white/40 font-lexend tracking-tighter uppercase font-black">NEW PERFORMANCE GEAR DROPPING FRIDAY</span>
+<!-- Duplicate for seamless scroll -->
+<span class="text-[#CCFF00] font-lexend tracking-tighter uppercase font-black">/</span>
+<span class="text-white/40 font-lexend tracking-tighter uppercase font-black">MARK R. JUST HIT 220KG SQUAT PR</span>
+<span class="text-[#CCFF00] font-lexend tracking-tighter uppercase font-black">/</span>
+<span class="text-white/40 font-lexend tracking-tighter uppercase font-black">6 NEW ATHLETES JOINED THE GRAVITY</span>
+</div>
+</section>
+<!-- Metric Hero Stats -->
+<section class="py-24 px-10">
+<div id="stats-section" class="grid grid-cols-2 md:grid-cols-4 gap-12 max-w-7xl mx-auto text-center">
+<div>
+<div class="text-7xl font-lexend font-black text-white italic mb-2 stat-counter" data-target="12" data-suffix="K+">0K+</div>
+<div class="text-[#CCFF00] font-label-bold uppercase">Active Elite</div>
+</div>
+<div>
+<div class="text-7xl font-lexend font-black text-white italic mb-2 stat-counter" data-target="4.9" data-decimals="1">0.0</div>
+<div class="text-[#CCFF00] font-label-bold uppercase">Member Rating</div>
+</div>
+<div>
+<div class="text-7xl font-lexend font-black text-white italic mb-2 stat-counter" data-target="24" data-suffix="/7">0/7</div>
+<div class="text-[#CCFF00] font-label-bold uppercase">Zero Downtime</div>
+</div>
+<div>
+<div class="text-7xl font-lexend font-black text-white italic mb-2 stat-counter" data-target="350" data-suffix="+">0+</div>
+<div class="text-[#CCFF00] font-label-bold uppercase">PRs Weekly</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-20 px-10 border-t border-[#1A1A1A] bg-black flex flex-col items-center justify-center text-center">
+<div class="text-5xl font-black text-[#1A1A1A] mb-8 font-lexend uppercase tracking-tighter">GRAVITY</div>
+<div class="flex flex-wrap justify-center gap-10 mb-12">
+<a class="text-zinc-600 hover:text-[#CCFF00] transition-colors font-lexend text-xs tracking-widest uppercase" href="#">PRIVACY POLICY</a>
+<a class="text-zinc-600 hover:text-[#CCFF00] transition-colors font-lexend text-xs tracking-widest uppercase" href="#">TERMS OF SERVICE</a>
+<a class="text-zinc-600 hover:text-[#CCFF00] transition-colors font-lexend text-xs tracking-widest uppercase" href="#">CONTACT</a>
+<a class="text-zinc-600 hover:text-[#CCFF00] transition-colors font-lexend text-xs tracking-widest uppercase" href="#">PRESS</a>
+</div>
+<div class="text-zinc-600 font-lexend text-xs tracking-widest uppercase">
+            © 2024 GRAVITY PERFORMANCE. NO WEAKNESS.
+        </div>
+</footer>
+<style>
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-infinite-scroll {
+            display: flex;
+            width: max-content;
+            animation: scroll 30s linear infinite;
+        }
+    </style>
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Hero Sequence Animation
+        const heroCanvas = document.getElementById("hero-canvas");
+        const heroContext = heroCanvas.getContext("2d");
+
+        heroCanvas.width = 1280;
+        heroCanvas.height = 720;
+
+        const heroFrameCount = 49;
+        const currentHeroFrame = index => (
+          `frames_home/ezgif-frame-${(index + 1).toString().padStart(3, '0')}.jpg`
+        );
+
+        const heroImages = [];
+        const heroState = { frame: 0 };
+
+        // Pre-decode utility to prevent jank
+        const preloadHero = async () => {
+          const promises = [];
+          for (let i = 0; i < heroFrameCount; i++) {
+            const img = new Image();
+            img.src = currentHeroFrame(i);
+            heroImages.push(img);
+            // Attempt to decode in background
+            if (img.decode) {
+              promises.push(img.decode().catch(e => console.error("Decode error", e)));
+            }
+          }
+          await Promise.all(promises);
+          renderHero();
+        };
+
+        const heroTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: "#hero-section",
+            start: "top top",
+            end: "bottom bottom",
+            scrub: 0.5
+          }
+        });
+
+        // 1. Scrub the canvas frames
+        heroTl.to(heroState, {
+          frame: heroFrameCount - 1,
+          snap: "frame",
+          ease: "none",
+          duration: heroFrameCount,
+          onUpdate: renderHero
+        }, 0);
+
+        // 2. Fade out Text 2 (No Weakness) early (first 20% of scroll)
+        heroTl.to("#hero-text-2", {
+            opacity: 0,
+            y: -50,
+            duration: heroFrameCount * 0.2,
+            ease: "power1.inOut"
+        }, 0);
+
+        // 3. Fade in Text 3 (Only Progress)
+        heroTl.to("#hero-text-3", {
+            opacity: 1,
+            y: 0,
+            duration: heroFrameCount * 0.2,
+            ease: "power1.out"
+        }, heroFrameCount * 0.25);
+
+        // 4. Fade out Text 3
+        heroTl.to("#hero-text-3", {
+            opacity: 0,
+            y: -50,
+            duration: heroFrameCount * 0.2,
+            ease: "power1.in"
+        }, heroFrameCount * 0.55);
+
+        // 5. Fade in Text 1 (Gravity + Buttons)
+        heroTl.to("#hero-text-1", {
+            opacity: 1,
+            y: 0,
+            duration: heroFrameCount * 0.2,
+            ease: "power1.out"
+        }, heroFrameCount * 0.7);
+
+        preloadHero();
+        let lastHeroRenderedFrame = -1;
+
+        function renderHero() {
+          const frameIndex = Math.round(heroState.frame);
+          if (frameIndex !== lastHeroRenderedFrame) {
+            // Optimization: Remove clearRect since images are full-frame and opaque
+            if (heroImages[frameIndex] && heroImages[frameIndex].complete) {
+              heroContext.drawImage(heroImages[frameIndex], 0, 0, heroCanvas.width, heroCanvas.height);
+              lastHeroRenderedFrame = frameIndex;
+            }
+          }
+        }
+
+        // Training Cards — staggered one-by-one reveal
+        gsap.utils.toArray('.training-card').forEach((card, i) => {
+            gsap.to(card, {
+                opacity: 1,
+                y: 0,
+                duration: 0.9,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: '#training-section',
+                    start: 'top 70%',
+                    toggleActions: 'play none none none'
+                },
+                delay: i * 0.35
+            });
+        });
+
+        // Membership Tier Cards — staggered one-by-one reveal + inner text stagger
+        gsap.utils.toArray('.tier-card').forEach((card, i) => {
+            const cardDelay = i * 0.35;
+
+            // Card slide-in
+            gsap.to(card, {
+                opacity: 1,
+                y: 0,
+                duration: 0.9,
+                ease: 'power3.out',
+                delay: cardDelay,
+                scrollTrigger: {
+                    trigger: '#membership-section',
+                    start: 'top 70%',
+                    toggleActions: 'play none none none'
+                }
+            });
+
+            // Inner text stagger — starts after card has appeared
+            const items = card.querySelectorAll('.tier-item');
+            gsap.to(items, {
+                opacity: 1,
+                y: 0,
+                duration: 0.55,
+                ease: 'power2.out',
+                stagger: 0.13,
+                delay: cardDelay + 0.4,
+                scrollTrigger: {
+                    trigger: '#membership-section',
+                    start: 'top 70%',
+                    toggleActions: 'play none none none'
+                }
+            });
+        });
+
+        // Decline Cable Fly Animation (3rd Section)
+        const declineCanvas = document.getElementById("decline-canvas");
+        const declineCtx = declineCanvas.getContext("2d");
+        declineCanvas.width = 1920;
+        declineCanvas.height = 1080;
+
+        const declineFrameCount = 50;
+        const declineFramePath = index =>
+          `frames_decline/ezgif-frame-${(index + 1).toString().padStart(3, '0')}.jpg`;
+
+        const declineImages = [];
+        const declineState = { frame: 0 };
+
+        const preloadDecline = async () => {
+          const promises = [];
+          for (let i = 0; i < declineFrameCount; i++) {
+            const img = new Image();
+            img.src = declineFramePath(i);
+            declineImages.push(img);
+            if (img.decode) promises.push(img.decode().catch(() => {}));
+          }
+          await Promise.all(promises);
+          renderDecline();
+        };
+
+        let declineRafPending = false;
+        gsap.to(declineState, {
+          frame: declineFrameCount - 1,
+          snap: "frame",
+          ease: "none",
+          scrollTrigger: {
+            trigger: "#biomechanics-section",
+            start: "top top",
+            end: "bottom bottom",
+            scrub: 1
+          },
+          onUpdate: () => {
+            if (!declineRafPending) {
+              declineRafPending = true;
+              requestAnimationFrame(() => {
+                renderDecline();
+                declineRafPending = false;
+              });
+            }
+          }
+        });
+
+        preloadDecline();
+        let lastDeclineFrame = -1;
+        let currentDeclinePhaseIndex = -1;
+
+        function renderDecline() {
+          const idx = Math.round(declineState.frame);
+          if (idx !== lastDeclineFrame && declineImages[idx] && declineImages[idx].complete) {
+            declineCtx.drawImage(declineImages[idx], 0, 0, declineCanvas.width, declineCanvas.height);
+            lastDeclineFrame = idx;
+          }
+
+          // Update HUD cues based on frame progress
+          const phaseIndex = Math.min(3, Math.floor((idx / declineFrameCount) * 4));
+          if (phaseIndex !== currentDeclinePhaseIndex) {
+            const p = phases[phaseIndex];
+            document.getElementById('phase-number').innerText = p.num;
+            document.getElementById('phase-title').innerText = p.title;
+            document.getElementById('phase-desc').innerText = p.desc;
+            document.getElementById('tension-metric').innerText = p.tension;
+            document.getElementById('torque-metric').innerText = p.torque;
+            currentDeclinePhaseIndex = phaseIndex;
+          }
+        }
+
+        // Biomechanics Sequence Animation (Recovery section canvas)
+        const canvas = document.getElementById("biomech-canvas");
+        const context = canvas.getContext("2d");
+
+        canvas.width = 1920;
+        canvas.height = 1080;
+
+        const frameCount = 80;
+        const currentFrame = index => (
+          `frames/ezgif-frame-${(index + 1).toString().padStart(3, '0')}.jpg`
+        );
+
+        const images = [];
+        const state = { frame: 0 };
+
+        const phases = [
+            {
+                num: "CUE 01",
+                title: "ANCHOR SCAPULA",
+                desc: "DEPRESS SHOULDERS. PIN LATS DOWN. ISOLATE THE CHEST BEFORE INITIATING TENSION.",
+                tension: "85%",
+                torque: "90 NM"
+            },
+            {
+                num: "CUE 02",
+                title: "FIXED ELBOW ARC",
+                desc: "DO NOT PRESS. MAINTAIN SLIGHT BEND AND SWEEP CABLES IN A WIDE, RIGID ARC.",
+                tension: "95%",
+                torque: "140 NM"
+            },
+            {
+                num: "CUE 03",
+                title: "TERMINAL SQUEEZE",
+                desc: "DRIVE BICEPS TOGETHER. HOLD PEAK CONTRACTION FOR 1 SECOND. EXHALE SHARPLY.",
+                tension: "100%",
+                torque: "180 NM"
+            },
+            {
+                num: "CUE 04",
+                title: "CONTROLLED ECCENTRIC",
+                desc: "3-SECOND NEGATIVE. MAXIMIZE MUSCLE FIBER RECRUITMENT AND STRETCH UNDER LOAD.",
+                tension: "90%",
+                torque: "110 NM"
+            }
+        ];
+
+        // Pre-decode utility to prevent jank
+        const preloadBiomech = async () => {
+          const promises = [];
+          for (let i = 0; i < frameCount; i++) {
+            const img = new Image();
+            img.src = currentFrame(i);
+            images.push(img);
+            if (img.decode) {
+              promises.push(img.decode().catch(e => console.error("Decode error", e)));
+            }
+          }
+          await Promise.all(promises);
+          render();
+        };
+
+        // GSAP ScrollTrigger Sequence — scrub: 1 = tight 1-second lag for smoothness
+        let rafPending = false;
+        gsap.to(state, {
+          frame: frameCount - 1,
+          snap: "frame",
+          ease: "none",
+          scrollTrigger: {
+            trigger: "#recovery-animation-section",
+            start: "top top",
+            end: "bottom bottom",
+            scrub: 1
+          },
+          onUpdate: () => {
+            if (!rafPending) {
+              rafPending = true;
+              requestAnimationFrame(() => {
+                render();
+                rafPending = false;
+              });
+            }
+          }
+        });
+
+        preloadBiomech();
+
+        let currentPhaseIndex = -1;
+        let lastRenderedFrame = -1;
+
+        function render() {
+          const frameIndex = Math.round(state.frame);
+          
+          if (frameIndex !== lastRenderedFrame) {
+            // Optimization: Remove clearRect since images are full-frame and opaque
+            if (images[frameIndex] && images[frameIndex].complete) {
+              context.drawImage(images[frameIndex], 0, 0, canvas.width, canvas.height);
+              lastRenderedFrame = frameIndex;
+            }
+          }
+          
+          // Update HUD only if the phase changes to prevent layout thrashing
+          const phaseIndex = Math.min(3, Math.floor((frameIndex / frameCount) * 4));
+          if (phaseIndex !== currentPhaseIndex) {
+            const currentPhase = phases[phaseIndex];
+            document.getElementById('phase-number').innerText = currentPhase.num;
+            document.getElementById('phase-title').innerText = currentPhase.title;
+            document.getElementById('phase-desc').innerText = currentPhase.desc;
+            document.getElementById('tension-metric').innerText = currentPhase.tension;
+            document.getElementById('torque-metric').innerText = currentPhase.torque;
+            currentPhaseIndex = phaseIndex;
+          }
+        }
+
+        // Facility Stats Ticker — walkaround section
+        const facilityStats = [
+            { value: 48,    display: v => v,                  suffix: '',          label: 'MACHINES AVAILABLE' },
+            { value: 6,     display: v => v,                  suffix: '',          label: 'RECOVERY PODS' },
+            { value: 24,    display: v => v,                  suffix: '/7',        label: 'OPEN' }
+        ];
+
+        const statOverlay   = document.getElementById('facility-stats');
+        const statNumberEl  = document.getElementById('stat-number');
+        const statSuffixEl  = document.getElementById('stat-suffix');
+        const statLabelEl   = document.getElementById('stat-label');
+        const statBarEl     = document.getElementById('stat-bar');
+        let currentStatIdx  = -1;
+        let statCounter     = { val: 0 };
+
+        function showFacilityStat(index) {
+            if (index === currentStatIdx) return;
+            currentStatIdx = index;
+            const stat = facilityStats[index];
+
+            // Kill any running tweens
+            gsap.killTweensOf([statOverlay, statBarEl]);
+
+            // Reset bar
+            gsap.set(statBarEl, { width: 0 });
+
+            // Update labels & number instantly
+            statSuffixEl.innerText = stat.suffix;
+            statLabelEl.innerText  = stat.label;
+            statNumberEl.innerText = stat.display(stat.value);
+
+            // Fade overlay in
+            gsap.to(statOverlay, { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' });
+
+            // Grow accent bar
+            gsap.to(statBarEl, { width: '100%', duration: 0.5, ease: 'power3.out', delay: 0.3 });
+        }
+
+        ScrollTrigger.create({
+            trigger: '#recovery-animation-section',
+            start: 'top top',
+            end: 'bottom bottom',
+            onUpdate: (self) => {
+                const idx = Math.min(2, Math.floor(self.progress * 3));
+                showFacilityStat(idx);
+            }
+        });
+
+        // Stats Counters Animation
+        const counters = document.querySelectorAll('.stat-counter');
+        counters.forEach(counter => {
+            const target = parseFloat(counter.getAttribute('data-target'));
+            const suffix = counter.getAttribute('data-suffix') || '';
+            const decimals = parseInt(counter.getAttribute('data-decimals')) || 0;
+            const state = { val: 0 };
+            
+            gsap.to(state, {
+                val: target,
+                duration: 2.5,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: "#stats-section",
+                    start: "top 85%"
+                },
+                onUpdate: function() {
+                    counter.innerText = state.val.toFixed(decimals) + suffix;
+                }
+            });
+        });
+
+        window.addEventListener("resize", render);
+    </script>
+</body></html>
